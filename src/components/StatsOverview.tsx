@@ -1,16 +1,13 @@
 import React from 'react';
-import { Bus, Activity, Compass, Route } from 'lucide-react';
+import { Bus, Activity, Compass, Navigation } from 'lucide-react';
 import type { VehicleStats } from '../services/api';
 
 interface StatsOverviewProps {
   stats: VehicleStats;
-  activeRoutesCount: number;
+  activeRoutesCount?: number;
 }
 
-export const StatsOverview: React.FC<StatsOverviewProps> = ({
-  stats,
-  activeRoutesCount,
-}) => {
+export const StatsOverview: React.FC<StatsOverviewProps> = ({ stats }) => {
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-6">
       <div className="bg-white rounded-2xl border border-slate-200/90 p-4 shadow-2xs flex items-center gap-3">
@@ -56,15 +53,15 @@ export const StatsOverview: React.FC<StatsOverviewProps> = ({
       </div>
 
       <div className="bg-white rounded-2xl border border-slate-200/90 p-4 shadow-2xs flex items-center gap-3">
-        <div className="w-11 h-11 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center shrink-0">
-          <Route className="w-5 h-5" />
+        <div className="w-11 h-11 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center shrink-0">
+          <Navigation className="w-5 h-5" />
         </div>
         <div>
           <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400 block">
-            Rute Terpilih
+            Mendekati Halte
           </span>
-          <span className="text-xl sm:text-2xl font-black text-indigo-600 tracking-tight">
-            {activeRoutesCount > 0 ? `${activeRoutesCount} Rute` : 'Semua'}
+          <span className="text-xl sm:text-2xl font-black text-sky-600 tracking-tight">
+            {stats.incoming.toLocaleString('id-ID')}
           </span>
         </div>
       </div>
