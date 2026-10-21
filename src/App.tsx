@@ -91,10 +91,10 @@ export function App() {
         ) : (
           <>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-              {vehicles.map((v) => (
+              {vehicles.map((vehicle) => (
                 <VehicleCard
-                  key={v.id}
-                  vehicle={v}
+                  key={vehicle.id}
+                  vehicle={vehicle}
                   onSelect={setSelectedVehicle}
                 />
               ))}

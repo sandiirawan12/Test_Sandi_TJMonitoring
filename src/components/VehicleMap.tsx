@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import L from 'leaflet';
+import LEAFLET from 'leaflet';
 
 interface VehicleMapProps {
   latitude: number;
@@ -19,16 +19,16 @@ export const VehicleMap: React.FC<VehicleMapProps> = ({
   routeColor = '#005696',
 }) => {
   const mapContainerRef = useRef<HTMLDivElement>(null);
-  const mapInstanceRef = useRef<L.Map | null>(null);
-  const markerRef = useRef<L.Marker | null>(null);
+  const mapInstanceRef = useRef<LEAFLET.Map | null>(null);
+  const markerRef = useRef<LEAFLET.Marker | null>(null);
 
   useEffect(() => {
     if (!mapContainerRef.current) return;
 
-    delete (L.Icon.Default.prototype as any)._getIconUrl;
+    delete (LEAFLET.Icon.Default.prototype as any)._getIconUrl;
 
     const rotationDeg = bearing != null ? bearing : 0;
-    const customIcon = L.divIcon({
+    const customIcon = LEAFLET.divIcon({
       className: 'custom-fleet-marker',
       html: `
         <div style="position: relative; display: flex; align-items: center; justify-content: center; width: 48px; height: 48px;">
@@ -59,17 +59,17 @@ export const VehicleMap: React.FC<VehicleMapProps> = ({
     });
 
     if (!mapInstanceRef.current) {
-      const map = L.map(mapContainerRef.current, {
+      const map = LEAFLET.map(mapContainerRef.current, {
         zoomControl: true,
         attributionControl: true,
       }).setView([latitude, longitude], 15);
 
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      LEAFLET.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; OpenStreetMap contributors',
         maxZoom: 19,
       }).addTo(map);
 
-      const marker = L.marker([latitude, longitude], { icon: customIcon }).addTo(map);
+      const marker = LEAFLET.marker([latitude, longitude], { icon: customIcon }).addTo(map);
       marker.bindPopup(`
         <div style="font-family: system-ui, sans-serif; font-size: 13px; line-height: 1.4; padding: 2px;">
           <strong style="color: #002244; font-size: 14px;">Bus #${label}</strong><br/>

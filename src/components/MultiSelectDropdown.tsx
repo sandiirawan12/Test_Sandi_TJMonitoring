@@ -100,8 +100,8 @@ export const MultiSelectDropdown: React.FC<MultiSelectDropdownProps> = ({
     }
   };
 
-  const handleClearAll = (e: React.MouseEvent) => {
-    e.stopPropagation();
+  const handleClearAll = (event: React.MouseEvent) => {
+    event.stopPropagation();
     onChange([]);
   };
 
@@ -140,8 +140,8 @@ export const MultiSelectDropdown: React.FC<MultiSelectDropdownProps> = ({
         role="button"
         tabIndex={disabled ? -1 : 0}
         onClick={() => !disabled && setIsOpen(!isOpen)}
-        onKeyDown={(e) => {
-          if (!disabled && (e.key === 'Enter' || e.key === ' ')) setIsOpen(!isOpen);
+        onKeyDown={(event) => {
+          if (!disabled && (event.key === 'Enter' || event.key === ' ')) setIsOpen(!isOpen);
         }}
         className={`w-full min-h-[44px] px-3.5 py-2 border rounded-xl flex items-center justify-between gap-2 text-left transition-all shadow-2xs ${
           disabled
@@ -161,7 +161,7 @@ export const MultiSelectDropdown: React.FC<MultiSelectDropdownProps> = ({
                 {selectedIds.length} dipilih
               </span>
               <span className="text-xs text-slate-600 truncate hidden sm:inline">
-                ({items.filter((i) => selectedIds.includes(i.id)).map((i) => i.label).slice(0, 2).join(', ')}
+                ({items.filter((item) => selectedIds.includes(item.id)).map((item) => item.label).slice(0, 2).join(', ')}
                 {selectedIds.length > 2 ? ` +${selectedIds.length - 2}` : ''})
               </span>
             </div>
@@ -201,9 +201,9 @@ export const MultiSelectDropdown: React.FC<MultiSelectDropdownProps> = ({
                 type="text"
                 placeholder={`Cari berdasarkan nama atau ID...`}
                 value={search}
-                onChange={(e) => handleSearchChange(e.target.value)}
+                onChange={(event) => handleSearchChange(event.target.value)}
                 className="w-full pl-8 pr-8 py-2 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 focus:bg-white transition-all placeholder:text-slate-400"
-                onClick={(e) => e.stopPropagation()}
+                onClick={(event) => event.stopPropagation()}
               />
               {search && (
                 <button

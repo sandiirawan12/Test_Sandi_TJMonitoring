@@ -227,7 +227,7 @@ export async function fetchVehicles({
     }
 
     const raw = json.data || [];
-    const vehicles: EnrichedVehicle[] = raw.map((v) => normalizeVehicle(v, includedMap));
+    const vehicles: EnrichedVehicle[] = raw.map((vehicleItem) => normalizeVehicle(vehicleItem, includedMap));
 
     const { totalItems, totalPages } = calculatePagination(
       json.links as Record<string, string>,
@@ -280,14 +280,14 @@ export async function fetchRoutes({
     const json: JsonApiResponse<RouteResource[]> = await res.json();
     const data = json.data || [];
 
-    const routes = data.map((r) => ({
-      id: r.id,
-      longName: r.attributes.long_name || r.id,
-      shortName: r.attributes.short_name || '',
-      color: r.attributes.color ? `#${r.attributes.color}` : '#005696',
-      textColor: r.attributes.text_color ? `#${r.attributes.text_color}` : '#ffffff',
-      description: r.attributes.description || '',
-      type: r.attributes.type,
+    const routes = data.map((routeItem) => ({
+      id: routeItem.id,
+      longName: routeItem.attributes.long_name || routeItem.id,
+      shortName: routeItem.attributes.short_name || '',
+      color: routeItem.attributes.color ? `#${routeItem.attributes.color}` : '#005696',
+      textColor: routeItem.attributes.text_color ? `#${routeItem.attributes.text_color}` : '#ffffff',
+      description: routeItem.attributes.description || '',
+      type: routeItem.attributes.type,
     }));
 
     return {
@@ -332,12 +332,12 @@ export async function fetchTrips({
     const json: JsonApiResponse<TripResource[]> = await res.json();
     const data = json.data || [];
 
-    const trips = data.map((t) => ({
-      id: t.id,
-      headsign: t.attributes.headsign || `Trip #${t.id}`,
-      routeId: t.relationships?.route?.data?.id,
-      directionId: t.attributes.direction_id,
-      wheelchairAccessible: t.attributes.wheelchair_accessible,
+    const trips = data.map((tripItem) => ({
+      id: tripItem.id,
+      headsign: tripItem.attributes.headsign || `Trip #${tripItem.id}`,
+      routeId: tripItem.relationships?.route?.data?.id,
+      directionId: tripItem.attributes.direction_id,
+      wheelchairAccessible: tripItem.attributes.wheelchair_accessible,
     }));
 
     return {
@@ -380,8 +380,8 @@ export async function fetchVehicleStats(
     let stopped = 0;
     let incoming = 0;
 
-    for (const v of data) {
-      const status = v.attributes?.current_status;
+    for (const vehicleItem of data) {
+      const status = vehicleItem.attributes?.current_status;
       if (status === 'IN_TRANSIT_TO') inTransit++;
       else if (status === 'STOPPED_AT') stopped++;
       else if (status === 'INCOMING_AT') incoming++;

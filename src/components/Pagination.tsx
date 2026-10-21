@@ -70,12 +70,12 @@ export const Pagination: React.FC<PaginationProps> = ({
             id="pageSizeSelect"
             value={pageSize}
             disabled={isLoading}
-            onChange={(e) => onPageSizeChange(Number(e.target.value))}
+            onChange={(event) => onPageSizeChange(Number(event.target.value))}
             className="px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-semibold text-slate-800 focus:outline-hidden focus:border-blue-500 cursor-pointer disabled:opacity-50"
           >
-            {PAGE_SIZE_OPTIONS.map((opt) => (
-              <option key={opt} value={opt}>
-                {opt} per hal
+            {PAGE_SIZE_OPTIONS.map((sizeOption) => (
+              <option key={sizeOption} value={sizeOption}>
+                {sizeOption} per hal
               </option>
             ))}
           </select>

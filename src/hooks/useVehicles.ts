@@ -59,7 +59,8 @@ export function useVehicles({ initialPageSize = DEFAULT_PAGE_SIZE }: UseVehicles
         ]);
 
         const sorted = [...result.vehicles].sort(
-          (a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
+          (firstVehicle, secondVehicle) =>
+            new Date(secondVehicle.updatedAt).getTime() - new Date(firstVehicle.updatedAt).getTime()
         );
         setVehicles(sorted);
         setStats(statsResult);
@@ -73,8 +74,8 @@ export function useVehicles({ initialPageSize = DEFAULT_PAGE_SIZE }: UseVehicles
           totalPages: realTotalPages,
           hasNext: page < realTotalPages,
         });
-      } catch (err: any) {
-        setError(err.message || 'Gagal memuat data kendaraan.');
+      } catch (error: any) {
+        setError(error.message || 'Gagal memuat data kendaraan.');
       } finally {
         setLoading(false);
         setIsRefreshing(false);

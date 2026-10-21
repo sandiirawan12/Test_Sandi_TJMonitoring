@@ -27,14 +27,14 @@ export function useRoutes() {
 
     try {
       while (true) {
-        const res = await fetchRoutes({ limit: DROPDOWN_PAGE_SIZE, offset });
-        allRoutes.push(...res.routes);
-        if (!res.hasMore || res.routes.length === 0) break;
-        offset = res.nextOffset;
+        const response = await fetchRoutes({ limit: DROPDOWN_PAGE_SIZE, offset });
+        allRoutes.push(...response.routes);
+        if (!response.hasMore || response.routes.length === 0) break;
+        offset = response.nextOffset;
       }
       setRoutes(allRoutes);
-    } catch (err: any) {
-      setError(err.message || 'Gagal memuat rute.');
+    } catch (error: any) {
+      setError(error.message || 'Gagal memuat rute.');
     } finally {
       setLoading(false);
     }

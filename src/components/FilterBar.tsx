@@ -23,19 +23,19 @@ export const FilterBar: React.FC<FilterBarProps> = ({
   const { routes, loading: routesLoading } = useRoutes();
   const { trips, loading: tripsLoading } = useTrips(selectedRoutes);
 
-  const routeItems: DropdownItem[] = routes.map((r) => ({
-    id: r.id,
-    label: r.shortName ? `${r.shortName} - ${r.longName}` : r.longName,
-    subLabel: r.description || (r.type === 3 ? 'Bus' : 'Layanan Transit'),
-    color: r.color,
-    badge: r.id,
+  const routeItems: DropdownItem[] = routes.map((routeItem) => ({
+    id: routeItem.id,
+    label: routeItem.shortName ? `${routeItem.shortName} - ${routeItem.longName}` : routeItem.longName,
+    subLabel: routeItem.description || (routeItem.type === 3 ? 'Bus' : 'Layanan Transit'),
+    color: routeItem.color,
+    badge: routeItem.id,
   }));
 
-  const tripItems: DropdownItem[] = trips.map((t) => ({
-    id: t.id,
-    label: t.headsign,
-    subLabel: `ID: ${t.id}${t.directionId != null ? ` (Arah ${t.directionId})` : ''}`,
-    badge: t.id,
+  const tripItems: DropdownItem[] = trips.map((tripItem) => ({
+    id: tripItem.id,
+    label: tripItem.headsign,
+    subLabel: `ID: ${tripItem.id}${tripItem.directionId != null ? ` (Arah ${tripItem.directionId})` : ''}`,
+    badge: tripItem.id,
   }));
 
   const hasActiveFilters = selectedRoutes.length > 0 || selectedTrips.length > 0;
@@ -103,20 +103,20 @@ export const FilterBar: React.FC<FilterBarProps> = ({
           <span className="text-slate-400 font-medium mr-1">Filter Aktif:</span>
 
           {selectedRoutes.map((routeId) => {
-            const routeObj = routes.find((r) => r.id === routeId);
+            const matchedRoute = routes.find((route) => route.id === routeId);
             return (
               <span
                 key={routeId}
                 className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-100 text-slate-800 border border-slate-200"
               >
-                {routeObj?.color && (
+                {matchedRoute?.color && (
                   <span
                     className="w-2 h-2 rounded-full"
-                    style={{ backgroundColor: routeObj.color }}
+                    style={{ backgroundColor: matchedRoute.color }}
                   />
                 )}
                 <span className="font-medium">
-                  Rute: {routeObj ? routeObj.shortName || routeObj.longName : routeId}
+                  Rute: {matchedRoute ? matchedRoute.shortName || matchedRoute.longName : routeId}
                 </span>
                 <button
                   type="button"
@@ -130,7 +130,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
           })}
 
           {selectedTrips.map((tripId) => {
-            const tripObj = trips.find((t) => t.id === tripId);
+            const matchedTrip = trips.find((trip) => trip.id === tripId);
             return (
               <span
                 key={tripId}
@@ -138,7 +138,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
               >
                 <Navigation className="w-3 h-3 text-blue-600" />
                 <span className="font-medium">
-                  Trip: {tripObj ? tripObj.headsign : tripId}
+                  Trip: {matchedTrip ? matchedTrip.headsign : tripId}
                 </span>
                 <button
                   type="button"

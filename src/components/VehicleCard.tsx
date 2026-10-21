@@ -12,8 +12,8 @@ interface VehicleCardProps {
 export const VehicleCard: React.FC<VehicleCardProps> = ({ vehicle, onSelect }) => {
   const [copied, setCopied] = useState(false);
 
-  const handleCopyCoords = (e: React.MouseEvent) => {
-    e.stopPropagation();
+  const handleCopyCoords = (event: React.MouseEvent) => {
+    event.stopPropagation();
     if (vehicle.latitude != null && vehicle.longitude != null) {
       navigator.clipboard.writeText(`${vehicle.latitude}, ${vehicle.longitude}`);
       setCopied(true);

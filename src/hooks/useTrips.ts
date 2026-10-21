@@ -31,20 +31,20 @@ export function useTrips(selectedRoutes: string[] = []) {
 
     try {
       while (true) {
-        const res = await fetchTrips({ routes, limit: DROPDOWN_PAGE_SIZE, offset });
-        allTrips.push(...res.trips);
-        if (!res.hasMore || res.trips.length === 0) break;
-        offset = res.nextOffset;
+        const response = await fetchTrips({ routes, limit: DROPDOWN_PAGE_SIZE, offset });
+        allTrips.push(...response.trips);
+        if (!response.hasMore || response.trips.length === 0) break;
+        offset = response.nextOffset;
       }
       const seen = new Set<string>();
-      const unique = allTrips.filter((t) => {
-        if (seen.has(t.id)) return false;
-        seen.add(t.id);
+      const unique = allTrips.filter((trip) => {
+        if (seen.has(trip.id)) return false;
+        seen.add(trip.id);
         return true;
       });
       setTrips(unique);
-    } catch (err: any) {
-      setError(err.message || 'Gagal memuat trip.');
+    } catch (error: any) {
+      setError(error.message || 'Gagal memuat trip.');
     } finally {
       setLoading(false);
     }
