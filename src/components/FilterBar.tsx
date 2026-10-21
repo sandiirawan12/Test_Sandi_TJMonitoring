@@ -34,7 +34,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
   const tripItems: DropdownItem[] = trips.map((tripItem) => ({
     id: tripItem.id,
     label: tripItem.headsign,
-    subLabel: `ID: ${tripItem.id}${tripItem.directionId != null ? ` (Arah ${tripItem.directionId})` : ''}`,
+    subLabel: `ID: ${tripItem.id}`,
     badge: tripItem.id,
   }));
 
